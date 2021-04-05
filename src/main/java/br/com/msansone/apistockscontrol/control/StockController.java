@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("stock")
 public class StockController {
 
@@ -42,5 +43,10 @@ public class StockController {
             return ResponseEntity.badRequest().build();
         }
     }
-    
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity delete (@PathVariable Long id){
+        stockService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -10,5 +10,5 @@ public interface StockService {
     Stock getById(Long id);
     Stock add(Stock stock);
     Stock change(Stock stock, Long id) throws Exception;
-
+    void delete(Long id);
 }

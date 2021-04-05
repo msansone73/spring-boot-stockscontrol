@@ -41,4 +41,9 @@ public class StockServiceImpl implements  StockService{
         atual.setType(stock.getType());
         return stockRepository.save(atual);
     }
+
+    @Override
+    public void delete(Long id) {
+        stockRepository.deleteById(id);
+    }
 }
