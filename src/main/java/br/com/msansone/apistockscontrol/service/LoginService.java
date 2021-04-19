@@ -10,5 +10,5 @@ public interface LoginService {
     Login getOne(Long id);
     Login add(Login login);
     Login update(Login login, Long id) throws Exception;
-
+    Login login(Login login);
 }

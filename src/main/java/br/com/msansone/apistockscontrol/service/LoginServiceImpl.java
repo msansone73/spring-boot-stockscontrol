@@ -41,4 +41,9 @@ public class LoginServiceImpl implements LoginService{
         return loginRepository.save(atual);
     }
 
+    @Override
+    public Login login(Login login) {
+        return loginRepository.findByLoginAndPassword(login.getLogin(), login.getPassword());
+    }
+
 }

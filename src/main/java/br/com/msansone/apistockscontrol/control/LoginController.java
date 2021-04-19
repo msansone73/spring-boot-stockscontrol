@@ -31,6 +31,11 @@ public class LoginController {
         return ResponseEntity.ok(loginService.add(login));
     }
 
+    @PostMapping(value="/autenticar")
+    public ResponseEntity<Login> autenticLogin(@RequestBody Login login){
+        return ResponseEntity.ok(loginService.login(login));
+    }
+
     @PutMapping(value="/{id}")
     public ResponseEntity<Login> changeLogin(@RequestBody Login login, @PathVariable Long id) throws Exception {
         return ResponseEntity.ok(loginService.update(login, id));
