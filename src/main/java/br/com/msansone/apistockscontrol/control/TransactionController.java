@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "https://msansone.com.br")
 @RequestMapping("transaction")
 public class TransactionController {
 
