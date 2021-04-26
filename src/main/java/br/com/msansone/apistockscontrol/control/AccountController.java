@@ -12,7 +12,7 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin(origins = "https://msansone.com.br")
+@CrossOrigin
 @RequestMapping("/account")
 public class AccountController {
     

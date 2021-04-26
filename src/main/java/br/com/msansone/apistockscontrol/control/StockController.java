@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 
 
 @RestController
-@CrossOrigin(origins = "https://msansone.com.br")
+@CrossOrigin
 @RequestMapping("stock")
 public class StockController {
 

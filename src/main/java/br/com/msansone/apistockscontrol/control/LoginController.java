@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@CrossOrigin(origins = "https://msansone.com.br")
+@CrossOrigin
 @RequestMapping("/login")
 public class LoginController {
 
