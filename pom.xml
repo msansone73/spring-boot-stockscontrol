@@ -73,15 +73,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<image>
-						<name>myorg.demo</name>
-					</image>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 
