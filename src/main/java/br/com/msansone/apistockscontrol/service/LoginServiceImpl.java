@@ -43,7 +43,8 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public Login login(Login login) {
-        return loginRepository.findByLoginAndPassword(login.getLogin(), login.getPassword());
+        List<Login> logins = loginRepository.findByLoginAndPassword(login.getLogin(), login.getPassword());
+        return logins.isEmpty()?null:logins.get(0);
     }
 
 }
