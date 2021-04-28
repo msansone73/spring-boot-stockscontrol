@@ -1,14 +1,13 @@
 package br.com.msansone.apistockscontrol.control;
 
+import br.com.msansone.apistockscontrol.exception.RegisterNotFoundException;
 import br.com.msansone.apistockscontrol.model.Account;
 import br.com.msansone.apistockscontrol.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -46,8 +45,13 @@ public class AccountController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Account> change(@RequestBody Account account, @PathVariable Long id) throws Exception {
-        return  ResponseEntity.ok(accountService.update(account, id));
+    public ResponseEntity<Account> change(@RequestBody Account account, @PathVariable Long id)  {
+        try {
+            Account acc=accountService.update(account, id);
+            return  ResponseEntity.ok(acc);
+        } catch (RegisterNotFoundException e) {
+            return (ResponseEntity<Account>) ResponseEntity.notFound();
+        }
     }
     
 

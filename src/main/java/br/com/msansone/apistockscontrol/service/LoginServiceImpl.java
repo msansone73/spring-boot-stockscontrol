@@ -1,5 +1,6 @@
 package br.com.msansone.apistockscontrol.service;
 
+import br.com.msansone.apistockscontrol.exception.RegisterNotFoundException;
 import br.com.msansone.apistockscontrol.model.Login;
 import br.com.msansone.apistockscontrol.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,11 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public Login update(Login login, Long id) throws Exception {
+    public Login update(Login login, Long id) throws RegisterNotFoundException {
         Login atual= getOne(id);
         if (atual==null){
-            throw new Exception("login inexistente");
+            throw new RegisterNotFoundException();
         }
-        atual.setLogin(login.getLogin());
         atual.setName(login.getName());
         atual.setPassword(login.getPassword());
         atual.setEmail(login.getEmail());
@@ -43,7 +43,7 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public Login login(Login login) {
-        List<Login> logins = loginRepository.findByLoginAndPassword(login.getLogin(), login.getPassword());
+        List<Login> logins = loginRepository.findByEmailAndPassword(login.getEmail(), login.getPassword());
         return logins.isEmpty()?null:logins.get(0);
     }
 

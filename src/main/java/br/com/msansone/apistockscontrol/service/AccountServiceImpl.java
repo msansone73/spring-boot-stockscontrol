@@ -1,15 +1,15 @@
 package br.com.msansone.apistockscontrol.service;
 
+import br.com.msansone.apistockscontrol.exception.RegisterNotFoundException;
 import br.com.msansone.apistockscontrol.model.Account;
 import br.com.msansone.apistockscontrol.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class AccountServiceImpl implements AccountService{
+public class AccountServiceImpl implements AccountService {
 
     @Autowired
     AccountRepository accountRepository;
@@ -30,10 +30,10 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Account update(Account account, Long id) throws Exception {
+    public Account update(Account account, Long id) throws RegisterNotFoundException {
         Account atual = getOne(id);
         if(atual==null){
-            throw new Exception("Account not found");
+            throw new RegisterNotFoundException();
         }
         atual.setName(account.getName());
         atual.setDescription(account.getDescription());

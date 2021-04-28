@@ -1,5 +1,6 @@
 package br.com.msansone.apistockscontrol.control;
 
+import br.com.msansone.apistockscontrol.exception.RegisterNotFoundException;
 import br.com.msansone.apistockscontrol.model.Login;
 import br.com.msansone.apistockscontrol.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,15 @@ public class LoginController {
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Login> changeLogin(@RequestBody Login login, @PathVariable Long id) throws Exception {
-        return ResponseEntity.ok(loginService.update(login, id));
+    public ResponseEntity<Login> changeLogin(@RequestBody Login login, @PathVariable Long id) {
+
+        try {
+            Login logi = loginService.update(login, id);
+            return ResponseEntity.ok(logi);
+        } catch (RegisterNotFoundException e) {
+            return (ResponseEntity<Login>) ResponseEntity.notFound();
+        }
+
     }
     
     
