@@ -2,11 +2,13 @@ package br.com.msansone.apistockscontrol.service;
 
 import br.com.msansone.apistockscontrol.exception.RegisterNotFoundException;
 import br.com.msansone.apistockscontrol.model.Login;
+import br.com.msansone.apistockscontrol.model.dto.LoginDTO;
 import br.com.msansone.apistockscontrol.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LoginServiceImpl implements LoginService{
@@ -15,36 +17,40 @@ public class LoginServiceImpl implements LoginService{
     LoginRepository loginRepository;
 
     @Override
-    public List<Login> getAll() {
-        return loginRepository.findAll();
+    public List<LoginDTO> getAll() {
+        List<Login> logins = loginRepository.findAll();
+        return logins.stream().map(l -> new LoginDTO(l)).collect(Collectors.toList());
+        //return logins.stream().map(LoginDTO.class::cast).collect(Collectors.toList());
     }
 
     @Override
-    public Login getOne(Long id) {
-        return loginRepository.findById(id).orElse(null);
+    public LoginDTO getOne(Long id) {
+        Login login = loginRepository.findById(id).orElse(null);
+        return login==null?null:new LoginDTO(login);
     }
 
     @Override
-    public Login add(Login login) {
-        return loginRepository.save(login);
+    public LoginDTO add(LoginDTO loginDTO) {
+        return new LoginDTO(loginRepository.save(loginDTO.getDBLogin()));
     }
 
     @Override
-    public Login update(Login login, Long id) throws RegisterNotFoundException {
-        Login atual= getOne(id);
+    public LoginDTO update(LoginDTO login, Long id) throws RegisterNotFoundException {
+        LoginDTO atual= getOne(id);
         if (atual==null){
             throw new RegisterNotFoundException();
         }
         atual.setName(login.getName());
         atual.setPassword(login.getPassword());
         atual.setEmail(login.getEmail());
-        return loginRepository.save(atual);
+        return new LoginDTO(loginRepository.save(atual.getDBLogin()));
     }
 
     @Override
-    public Login login(Login login) {
+    public LoginDTO login(LoginDTO login) {
         List<Login> logins = loginRepository.findByEmailAndPassword(login.getEmail(), login.getPassword());
-        return logins.isEmpty()?null:logins.get(0);
+        List<LoginDTO> loginDTIOs = logins.stream().map(l -> new LoginDTO(l)).collect(Collectors.toList());
+        return loginDTIOs.isEmpty()?null:loginDTIOs.get(0);
     }
 
 }
